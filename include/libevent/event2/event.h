@@ -246,6 +246,7 @@ struct event_base
  * also activate an event manually using event_active().  The even_base
  * loop will run the callbacks of active events; after it has done so, it
  * marks them as no longer active.
+ * p
  *
  * You can make an event non-pending by passing it to event_del().  This
  * also makes the event non-active.

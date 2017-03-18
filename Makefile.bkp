@@ -1,0 +1,101 @@
+# 编译参数
+
+SRC_PATH=./src
+PLUGIN_PATH=./plugin
+# public
+GPBASE_MOD=gp_base
+GPSQL_MOD=gp_sql
+GPTEMPLATE_MOD=gp_template
+GPXLS_MOD=gp_xls
+GPTCP_MOD=gp_tcp
+
+# 编译函数定义
+define make_base
+	@for sub in $(GPBASE_MOD); do \
+		(cd ${PLUGIN_PATH}/$$sub && make $1) \
+	done;
+endef
+
+define make_sql
+	@for sub in $(GPSQL_MOD); do \
+		(cd ${PLUGIN_PATH}/$$sub && make $1) \
+	done;
+endef
+
+define make_template
+	@for sub in $(GPTEMPLATE_MOD); do \
+		(cd ${PLUGIN_PATH}/$$sub && make $1) \
+	done;
+endef
+
+define make_xls
+	@for sub in $(GPXLS_MOD); do \
+		(cd ${PLUGIN_PATH}/$$sub && make $1) \
+	done;
+endef
+
+define make_tcp
+	@for sub in $(GPTCP_MOD); do \
+		(cd ${PLUGIN_PATH}/$$sub && make $1) \
+	done;
+endef
+
+all:
+
+
+plugin: gp_base gp_sql gp_template gp_template gp_xls gp_tcp
+
+# 测试使用main 链接库根据测试调整。
+test:
+#	g++ -DDEBUG -D__LINUX -g -std=c++11 ./src/main.cpp -I./include/ -L./lib/ -lgp_xls -lgp_sql -lgp_tcp -lgp_base -lboost_regex -lboost_system -lboost_filesystem -lboost_thread -lboost_date_time -luuid -pthread -lrt -ldl -o main 
+		
+.PHONY: fr_public fr_sql fr_template fr_xls help
+
+gp_base:
+#$(shell cp ./lib/* .)
+	$(call make_pub, all)
+
+gp_sql:
+	$(call make_sql, all)
+
+gp_template:
+	$(call make_template, all)
+
+gp_xls:
+	$(call make_xls, all)
+
+gp_tcp:
+	$(call make_tcp, all)
+
+gp_base_clean:
+	$(call make_base, clean)
+
+gp_sql_clean:
+	$(call make_sql, clean)
+
+gp_template_clean:
+	$(call make_template, clean)
+
+gp_xls_clean:
+	$(call make_xls, clean)
+
+gp_tcp_clean:
+	$(call make_tcp, clean)
+
+clean: gp_base_clean gp_sql_clean gp_template_clean gp_xls_clean gp_tcp_clean 
+
+help:
+	echo "makefile parameter : fr_public fr_sql fr_template fr_xls fr_tcp"
+	echo "clear parameter : fr_pub_clean fr_sql_clean fr_template_clean fr_xls_clean"
+	echo "if you want clean all. you can input make clean"
+
+tags:
+	rm -rf tags
+	touch tags
+	find . -iname '*.cpp' -or -iname '*.c' -or -iname '*.h'-or -iname '*.hpp' | xargs ctags --c++-kinds=+p --fields=+iaS --extra=+q --langmap=c++:+.inl -a tags
+
+# 一些历史遗留。部分可能还会用到
+#CFLAGS=-g -std=c++11 -fPIC
+#LDFLAGS=-shared
+#$(CXX) $(LDFLAGS) -o ${THIRDPART_LIB_PATH}/${TARGET} ${PROJECT_OBJECTS} ${MAIN_OBJECT} ${LIB_LIB} ${LINK_NONEEDED}
+

@@ -1,0 +1,17 @@
+
+#cache大小,单位Bytes
+#set_cachesize 1 524288000 1
+#data path
+set_data_dir ./data
+
+#Log 
+#set_flag DB_LOG_AUTOREMOVE
+#Log Memory Cache大小
+#set_lg_regionmax 1048576
+#Log最大值
+#set_lg_max 10485760
+#Log Buffer Cache
+#set_lg_bsize 2097152 
+#Log path
+set_lg_dir ./logs
+
