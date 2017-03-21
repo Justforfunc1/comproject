@@ -6,8 +6,8 @@ LIB_PATH=-L../lib/share -L../lib/static
 SHRLIB_PATH = ../lib/share
 STLLIB_PATH = ../lib/static
 
-LIB= -lpthread -lgpbase -ljsoncpp 
-SHRLIB = $(SHRLIB_PATH)/libgpbase.so		\
+LIB= -lpthread -lgp_base -ljsoncpp -lboost_filesystem -lboost_system -lboost_regex
+SHRLIB = $(SHRLIB_PATH)/libgp_base.so		\
 		 $(SHRLIB_PATH)/libprotobuf.so	
 
 STLIB = ../lib/static/libevent.a	\
@@ -19,6 +19,8 @@ CPPFLAGS= -std=c++11 -Wall -g
 
 OBJS = 
 
+.PHONY:all clean 
+
 all: log_test json_test
 
 compile:
@@ -26,11 +28,11 @@ compile:
 	
 	
 log_test:
-	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) log_test.cpp -o $(BIN_PATH)/log_test_mian
+	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) log_test.cpp -o log_test_mian
 	@printf "\033[32m LOG_TEST SUCCESS \033[0m\n"
 
 json_test:
-	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) json_test.cpp $(STLIB) -o $(BIN_PATH)/json_test_main
+	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) json_test.cpp $(STLIB) -o json_test_main
 	@printf "\033[32m JSON_TEST SUCCESS \033[0m\n"
 
 #libevent_test:

@@ -136,5 +136,103 @@ GPVOID GPTool::formatTimeStr(GPChar *str) {
 	}
 }
 
+//获取HHMISS时间戳
+long GPTool::parseTime(const GPChar *format, const GPChar* buf) {
+	long ret = 0;
+	GPChar *p = (GPChar *)strstr(format, "HH");
+	if (p != NULL) {
+		GPChar tmp[10];
+		snprintf(tmp, 3, buf + (p - format));
+		ret += atoi(tmp) * 3600;
+	}
+
+	p =  (GPChar *)strstr(format, "MI");
+	if (p != NULL) {
+		GPChar tmp[10];
+		snprintf(tmp, 3, buf + (p - format));
+		ret += atoi(tmp) * 60;
+	}
+
+	p =  (GPChar *)strstr(format, "SS");
+	if (p != NULL) {
+		GPChar tmp[10];
+		snprintf(tmp, 3, buf + (p - format));
+		ret += atoi(tmp);
+	}
+	return ret;
+}
+
+//当日时间
+long GPTool::parseDateTime(const GPChar *format, GPChar* buf) {
+	struct tm tm;
+	memset(&tm, 0, sizeof(tm));
+	if (buf != NULL) {
+		if (strptime(buf, format, &tm) == NULL) {
+			return 0;
+		}
+	} else { //缺省输出当前时间
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		localtime_r(&tv.tv_sec, &tm);
+	}
+	return mktime(&tm);
+}
+
+//获取周期时间
+GPString GPTool::getWeek() {
+	GPInt32 week_no;
+	struct timeval tv;
+	struct tm curtime;
+	gettimeofday(&tv, NULL);
+	localtime_r(&tv.tv_sec, &curtime);
+
+	if (curtime.tm_wday == 0) {
+		week_no = 7;
+	} else
+		week_no = curtime.tm_wday;
+	GPChar week[3];
+	sprintf(week, "%d", week_no);
+	return GPString(week);
+}
+
+//执行shell脚本
+#ifdef LINUX
+	GPBOOL  GPTool::execShellCmd( const GPString &cmd ){
+		FILE* fp = NULL;
+		if( (fp=popen(cmd.c_str(), "r" ) ) != NULL ){
+			pclose( fp);  fp = NULL;
+			return true;
+		}
+		return false;
+	}
+#endif
+
+//获取本机ip
+	GPVOID GPTool::getIp(GPString &ip){
+		ip.clear();
+#ifdef WIN32
+		/*
+		// 获得本机主机名
+		char hostname[MAX_PATH] = { 0 };
+		gethostname(hostname, MAX_PATH);
+		struct hostent FAR* lpHostEnt = gethostbyname(hostname);
+		if(lpHostEnt == NULL)
+		{
+			return DEFAULT_IP;
+		}
+
+		// 取得IP地址列表中的第一个为返回的IP(因为一台主机可能会绑定多个IP)
+		LPSTR lpAddr = lpHostEnt->h_addr_list[0];
+
+		// 将IP地址转化成字符串形式
+		struct in_addr inAddr;
+		memmove(&inAddr, lpAddr, 4);
+
+		return CString(inet_ntoa(inAddr));
+		*/
+#else
+#endif
+}
+
 
 }//namespace GPUniversal

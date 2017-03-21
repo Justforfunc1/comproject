@@ -40,7 +40,7 @@ documentation and/or software.
 */
 
 /* interface header */
-#include "Md5.h"
+#include "gp_base/GPMd5.h"
 
 /* system implementation headers */
 #include <stdio.h>

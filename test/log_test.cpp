@@ -15,7 +15,7 @@
 
 #define INIT_FILE "../conf/log_test.ini"
 
-using namespace gpbase;
+using namespace GPBase;
 using namespace std;
 
 int main(int args, char* argv[])

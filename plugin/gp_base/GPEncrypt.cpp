@@ -9,6 +9,16 @@
 
 #include "gp_base/GPEncrypt.h"
 
+#ifdef WIN32
+#ifdef _MFC
+#include <afxwin.h>
+#else
+#include <windows.h>
+#endif
+#else
+#include <unistd.h>
+#endif
+
 using namespace std;
 
 namespace GPUniversal
@@ -324,55 +334,197 @@ GPString GPEncrypt::base64Decode(const GPString& str, GPBOOL urlencode) {
 	return sret;
 }
 
-//初始化函数
-static GPVOID _rc4_init(GPByte *s, GPByte *key, unsigned long Len) {
-	GPInt32 i = 0, j = 0;
-	GPChar k[256] = { 0 };
-	GPByte tmp = 0;
-	for (i = 0; i < 256; i++) {
-		s[i] = i;
-		k[i] = key[i % Len];
+//rc4加密
+GPBOOL GPEncrypt::rc4_encrypt(GPString &content, const GPString &sKey){
+	return rc4_encrypt(const_cast<char*>(content.c_str()), (GPInt32)content.size(), sKey.c_str(), (GPInt32)sKey.size());
+}
+
+
+GPBOOL GPEncrypt::rc4_encrypt(GPByte* content, GPUInt32 size, const GPString &sKey){
+	RC4_KEY key;
+	RC4Init(sKey.c_str(), sKey.size(), &key);
+	RC4Works(content, size, &key);
+	return true;
+}
+
+
+#ifndef SWAP_VALUE
+#define SWAP_VALUE(x, y) { t = *x; *x = *y; *y = t; }
+#endif
+GPBOOL GPEncrypt::rc4_encrypt(GPChar *content, GPInt32 contentLength, const GPChar* sKey, GPInt32 ketLength){
+	GPChar t;
+	GPByte box[256];
+	GPInt32 index = 0;
+
+	//生成对应的Key
+	GPInt32 seed_len = ketLength;
+	GPByte *seed = (GPByte *)sKey;
+
+	GPInt32 src_len = contentLength;
+	GPByte *src = (GPByte *)content;
+
+	GPInt32 i;
+	for(i = 0; i < 256; i++){
+		box[i] = i;
 	}
-	for (i = 0; i < 256; i++) {
-		j = (j + s[i] + k[i]) % 256;
-		tmp = s[i];
-		s[i] = s[j]; //交换s[i]和s[j]
-		s[j] = tmp;
+
+	GPInt32 j = 0;
+	for (GPInt32 i = 0; i < 256; i++) {
+		j = (j + seed[i % seed_len] + box[i]) % 256;
+		SWAP_VALUE(&box[i], &box[j]);
 	}
-}
 
-//加解密
-static GPVOID _rc4_crypt(GPByte *s, GPByte *Data, unsigned long Len) {
-	GPInt32 i = 0, j = 0, t = 0;
-	unsigned long k = 0;
-	GPByte tmp;
-	for (k = 0; k < Len; k++) {
-		i = (i + 1) % 256;
-		j = (j + s[i]) % 256;
-		tmp = s[i];
-		s[i] = s[j]; //交换s[x]和s[y]
-		s[j] = tmp;
-		t = (s[i] + s[j]) % 256;
-		Data[k] ^= s[t];
+	GPInt32 x = 0; GPInt32 y = 0;
+	for (GPInt32 i = 0; i < src_len; i++) {
+		x = 0; y = 0;
+		x = (x + 1) % 256;
+		y = (box[x] + y) % 256;
+		SWAP_VALUE(&box[x], &box[y]);
+		index = (box[x] + box[y]) % 256;
+		t = *(src + i);
+		t ^= box[index];
+		*(src + i) = t;
 	}
+	return true;
 }
 
-
-static GPVOID rc4_crypt(GPByte *key, unsigned long keyLen, GPByte *data, unsigned long dataLen) {
-	GPByte s[256] = { 0 }; //S-box
-	_rc4_init(s, key, keyLen);
-	_rc4_crypt(s, data, dataLen);
+//字符串版本的rc4(加密)
+GPBOOL GPEncrypt::myStrEncrypt(GPString &content, const GPString &key){
+	if(rc4_encrypt(content, key)){
+		return convertBinaryToHexString(content);
+	}
+	return false;
 }
 
-//rc4
-GPString GPEncrypt::rc4String(const GPString& key, const GPString& str) {
-	GPByte *ret = (GPByte*) malloc(str.length());
-	memcpy(ret, str.c_str(), str.length());
-	rc4_crypt((GPByte*) key.c_str(), key.length(), ret, str.length());
-	GPString sret((GPChar*) ret, str.length());
-	free(ret);
-	return sret;
+//字符串版本的rc4(解密)
+GPBOOL GPEncrypt::myStrDecrypt(GPString &content, const GPString &key){
+	if(convertHexStringToBinary(content)){
+		return rc4_encrypt(content, key);
+	}
+	return false;
 }
 
+//二进制转字符串
+GPBOOL GPEncrypt::convertBinaryToHexString(GPString &content){
+	auto funcBinaryToStr = [](GPChar c)->GPChar{
+		if(0 <= c && c <= 9){
+			return c + '0';
+		}
+		else if(10 <= c && c <= 15){
+			return c - 10 + 'A';
+		}
+		return 'G';
+	};
+
+	GPString tmp;
+	for(auto iterContent = content.begin(); iterContent != content.end(); ++iterContent){
+		tmp += funcBinaryToStr((*iterContent & 0xF0) >> 4);
+		tmp += funcBinaryToStr(*iterContent & 0x0F);
+	}
+	content = tmp;
+	return true;
+}
+
+//字符串转二进制
+GPBOOL GPEncrypt::convertHexStringToBinary(GPString &content){
+	auto funcHexCharToChar = [](char c)->char{
+		switch(c){
+			case '1': return 1; case '2': return 2; case '3': return 3; case '4': return 4; case '5': return 5; case '6': return 6; case '7': return 7; case '8': return 8; case '9': return 9;
+			case 'A': return 10; case 'B': return 11; case 'C': return 12; case 'D': return 13; case 'E': return 14; case 'F': return 15;
+			default: return 0;
+		}
+	};
+
+	GPString tmp;
+	auto iterContent = content.begin();
+	while(iterContent != content.end()){
+		GPChar high = iterContent != content.end() ? *(iterContent++) : 0;
+		GPChar low = iterContent != content.end() ? *(iterContent++) : 0;
+		GPChar data = (funcHexCharToChar(high) << 4) + funcHexCharToChar(low);
+
+		tmp += data;
+	}
+	content = tmp;
+	return true;
+}
+
+//MD5加密(32位)
+GPString GPEncrypt::md5(const GPString str){
+	return MD5(str).md5();
+}
+
+//MD5加密(16位)
+GPString GPEncrypt::md5_16(const GPString str){
+	return MD5(str).md5().substr(8,16);
+}
+
+//uint32 转二进制
+inline GPUInt32 binary(GPUInt32 swap) {
+	swap = ((swap & 0x55555555) << 1) | ((swap & 0xAAAAAAAA) >> 1);
+	swap = ((swap & 0x33333333) << 2) | ((swap & 0xCCCCCCCC) >> 2);
+	swap = ((swap & 0x0F0F0F0F) << 4) | ((swap & 0xF0F0F0F0) >> 4);
+	swap = ((swap & 0x00FF00FF) << 8) | ((swap & 0xFF00FF00) >> 8);
+	swap = ((swap & 0x0000FFFF) << 16) | ((swap & 0xFFFF0000) >> 16);
+	return swap;
+}
+
+//uint64 转二进制
+inline GPUInt64 binary64(GPUInt64 swap) {
+	swap = ((swap & 0x5555555555555555) << 1) | ((swap & 0xAAAAAAAAAAAAAAAA) >> 1);
+	swap = ((swap & 0x3333333333333333) << 2) | ((swap & 0xCCCCCCCCCCCCCCCC) >> 2);
+	swap = ((swap & 0x0F0F0F0F0F0F0F0F) << 4) | ((swap & 0xF0F0F0F0F0F0F0F0) >> 4);
+	swap = ((swap & 0x00FF00FF00FF00FF) << 8) | ((swap & 0xFF00FF00FF00FF00) >> 8);
+	swap = ((swap & 0x0000FFFF0000FFFF) << 16) | ((swap & 0xFFFF0000FFFF0000) >> 16);
+	swap = ((swap & 0x00000000FFFFFFFF) << 32) | ((swap & 0xFFFFFFFF00000000) >> 32);
+	return swap;
+}
+
+//uint32 ID加密
+GPUInt32 GPEncrypt::encryptId32(GPUInt32 id, GPUInt32 key) {
+	GPUInt32 temp = 0;
+	GPUInt32 mod = 0;
+	id += key;
+	GPUInt32 temp_id = id * 10;
+	for (; temp_id != 0;) {
+		mod = ((temp_id = temp_id / 10)) % 10;
+		temp += mod;
+	}
+	temp = id * 10 + (10 - temp % 10);
+	return binary(temp);
+}
+
+//uint32 ID解密
+GPUInt32 GPEncrypt::decryptId32(GPUInt32 id, GPUInt32 key) {
+	GPUInt32 temp = binary(id);
+	if (temp % 10 == 0)
+		temp -= 1;
+	temp /= 10;
+	temp -= key;
+	return temp;
+}
+
+//uint64 ID加密
+GPUInt64 GPEncrypt::encryptId64(GPUInt64 id, GPUInt64 key) {
+	GPUInt64 temp = 0;
+	GPUInt64 mod = 0;
+	id += key;
+	GPUInt64 temp_id = id * 10;
+	for (; temp_id != 0;) {
+		mod = ((temp_id = temp_id / 10)) % 10;
+		temp += mod;
+	}
+	temp = id * 10 + (10 - temp % 10);
+	return binary64(temp);
+}
+
+//uint64 ID解密
+GPUInt64 GPEncrypt::decryptId64(GPUInt64 id, GPUInt64 key) {
+	GPUInt64 temp = binary64(id);
+	if (temp % 10 == 0)
+		temp -= 1;
+	temp /= 10;
+	temp -= key;
+	return temp;
+}
 
 }//namespace GPUniversal

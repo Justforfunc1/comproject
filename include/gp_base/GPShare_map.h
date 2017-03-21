@@ -1,21 +1,39 @@
 /**********************************************************
- *  \file share_map.h
- *  \brief 共享内存类
- *  \note	注意事项： 
- * 
- * \version 
- * * \author Allen.L
- **********************************************************/
-#ifndef _share_map_H
-#define _share_map_H
+ * \file GPShare_map.h
+ * \brief
+ * \note	注意事项：
+ *
+ *\version 
+ ** \author Allen.L
+**********************************************************/
+
+#ifndef _GPShare_map_H
+#define _GPShare_map_H
+
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/map.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
 #include <functional>
 #include <utility>
 
+namespace GPBase {
+
+/**********************************************************
+
+	GPShare_map			共享内存模板类
+
+	类名		：	GPShare_map
+
+	作者		：	Allen.L
+
+	创建时间	：
+
+	类描述		：
+
+**********************************************************/
+
 template<typename K, typename V>
-class share_map {
+class GPShare_map {
 public:
 	typedef boost::interprocess::allocator<std::pair<const K, V>, boost::interprocess::managed_shared_memory::segment_manager> AllocatorType;
 	typedef boost::container::map<K, V, std::less<K>, AllocatorType> _Map_Type;
@@ -26,7 +44,7 @@ protected:
 	_Map_Type *_map;
 	boost::interprocess::managed_shared_memory* _segment;
 public:
-	share_map(const char* segment_name, uint32 size, const char* name) :
+	GPShare_map(const char* segment_name, uint32 size, const char* name) :
 			_map(NULL), _segment(NULL) {
 		try {
 			_segment = new boost::interprocess::managed_shared_memory(boost::interprocess::create_only, segment_name, size);
@@ -44,7 +62,7 @@ public:
 		}
 	}
 
-	~share_map() {
+	~GPShare_map() {
 		delete _segment;
 	}
 
@@ -89,4 +107,7 @@ public:
 	}
 };
 
+}
+
 #endif
+

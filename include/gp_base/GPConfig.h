@@ -13,7 +13,7 @@
 #include "gp_base/GPDefine.h"
 #include <ext/hash_map>
 
-#define GPBASE_CONFIG gpbase::GPConfig::getConfig()
+#define GPBASE_CONFIG GPBase::GPConfig::getConfig()
 #define GPCONFIG_LOAD(filename) GPBASE_CONFIG.load(filename)
 #define GPCONFIG_GETSTR(section, key, d) GPBASE_CONFIG.getString(section, key, d)
 #define GPCONFIG_GETINT(section, key, d) GPBASE_CONFIG.getInt(section, key, d)

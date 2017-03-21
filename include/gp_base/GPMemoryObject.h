@@ -1,17 +1,35 @@
 /**********************************************************
- *  \file MemoryObject.h
- *  \brief
- *  \note	注意事项： 
- * 
- * \version 
- * * \author Allen.L
- **********************************************************/
-#ifndef _MemoryObject_H
-#define _MemoryObject_H
-#include "common.h"
+ * \file GPMemoryObject.h
+ * \brief
+ * \note	注意事项：
+ *
+ *\version 
+ ** \author Allen.L
+**********************************************************/
+
+#ifndef _GPMemoryObject_H
+#define _GPMemoryObject_H
+
+#include "gp_base/GPDefine.h"
 #include <boost/foreach.hpp>
 
-//-------- 双对象 --------
+
+/**********************************************************
+
+	DoubleObject			双对象内存
+
+	类名		：	DoubleObject
+
+	作者		：	Allen.L
+
+	创建时间	：
+
+	类描述		：
+
+**********************************************************/
+
+namespace GPBase {
+
 template<class T>
 class DoubleObject {
 public:
@@ -43,7 +61,7 @@ public:
 		m_items[!m_switch] = m_items[m_switch];
 	}
 
-	//flag: 1 当前 2 备用 3全部 
+	//flag: 1 当前 2 备用 3全部
 	void clear(int flag) {
 		if ((flag & 0x01) == 0x01) {
 			m_items[m_switch].clear();
@@ -90,7 +108,7 @@ public:
 			m_items[!m_switch][(*iter).first] = (*iter).second;
 		}
 	}
-	//flag: 1 当前 2 备用 3全部 
+	//flag: 1 当前 2 备用 3全部
 	void clear(int flag) {
 		if ((flag & 0x01) == 0x01) {
 			m_items[m_switch].clear();
@@ -105,7 +123,21 @@ public:
 	}
 };
 
-//------------ 内存对象 ---------------
+
+/**********************************************************
+
+	BaseMO			批数据内存对象
+
+	类名		：	BaseMO
+
+	作者		：	Allen.L
+
+	创建时间	：
+
+	类描述		：
+
+**********************************************************/
+
 template<typename K, typename V>
 class BaseMO: public DoubleMap<K, V> {
 public:
@@ -119,6 +151,7 @@ public:
 	}
 };
 
-
+}
 
 #endif
+

@@ -11,6 +11,8 @@
 #define _GPEncrypt_H
 
 #include "gp_base/GPDefine.h"
+#include "gp_base/GPMd5.h"
+#include "gp_base/GPRc4.h"
 
 namespace GPUniversal
 {
@@ -46,7 +48,8 @@ public:
 
 	/**********************************************************
 
-		函数名		：	urlEncode	urlDecode
+		函数名		：	urlEncode
+		函数名		：	urlDecode
 
 		功能		：	url编码
 		功能		：	url解码
@@ -134,7 +137,7 @@ public:
 		参数		：	string	str	输出及输出
 		参数		：	eCharacterEncoding	encoding	编码参数，暂时仅支持UFT8
 
-		返回值		：	0：成功		other：失败
+		返回值		：
 
 		创建作者	：	Allen.L
 
@@ -154,7 +157,7 @@ public:
 		参数		：	string	str	输出及输出
 		参数		：	bool	urlencode	编码参数
 
-		返回值		：	0：成功		other：失败
+		返回值		：	GPString
 
 		创建作者	：	Allen.L
 
@@ -174,7 +177,7 @@ public:
 		参数		：	string	str	输出及输出
 		参数		：	string	key	加密密钥
 
-		返回值		：	0：成功		other：失败
+		返回值		：	GPBOOL
 
 		创建作者	：	Allen.L
 
@@ -182,6 +185,83 @@ public:
 
 	**********************************************************/
 	static GPString rc4String(const GPString& key, const GPString& str);
+	static GPBOOL rc4_encrypt(GPChar *content, GPInt32 contentLength, const GPChar* sKey, GPInt32 ketLength);
+	static GPBOOL rc4_encrypt(GPString &content, const GPString &sKey);
+	static GPBOOL rc4_encrypt(GPByte* content, GPUInt32 size, const GPString &sKey);
+
+
+	/**********************************************************
+
+		函数名		：	myStrEncrypt
+		函数名		：	myStrDecrypt
+		函数名		：	convertBinaryToHexString
+		函数名		：	convertHexStringToBinary
+
+		功能		：	字符串版本的rc4(加/解密)	先用rc4转换二进制，然后将二进制转为十六进制的字符串
+		功能		：	二进制与十六进制的字符串互转
+
+		参数		：	string	content	输出内容
+		参数		：	string	key	加密密钥
+
+		返回值		：	GPBOOL
+
+		创建作者	：	Allen.L
+
+		修改记录	：
+
+	**********************************************************/
+	static GPBOOL myStrEncrypt(GPString &content, const GPString &key);
+	static GPBOOL myStrDecrypt(GPString &content, const GPString &key);
+	static GPBOOL convertBinaryToHexString(GPString &content);
+	static GPBOOL convertHexStringToBinary(GPString &content);
+
+
+	/**********************************************************
+
+		函数名		：	md5
+		函数名		：	md5_16
+
+		功能		：	生成MD5	默认为32位
+		功能		：	生成MD5(16位)
+
+		参数		：	char*	src		源字符串
+		参数		：	char*	dest	目标字符串
+
+		返回值		：	0：成功		other：失败
+
+		创建作者	：	Allen.L
+
+		修改记录	：
+
+	**********************************************************/
+	static GPString md5(const GPString str);
+	static GPString md5_16(const GPString str);
+
+
+	/**********************************************************
+
+		函数名		：	encryptId32
+		函数名		：	decryptId32
+		函数名		：	encryptId64
+		函数名		：	encryptId64
+
+		功能		：	ID加/解密（32位）
+		功能		：	ID加/解密（64位）
+
+		参数		：	GPUInt32,GPUInt64	id		待加密ID
+		参数		：	GPUInt32,GPUInt64	key		加密key
+
+		返回值		：	0：成功		other：失败
+
+		创建作者	：	Allen.L
+
+		修改记录	：
+
+	**********************************************************/
+	static GPUInt32 encryptId32(GPUInt32 id, GPUInt32 key);
+	static GPUInt32 decryptId32(GPUInt32 id, GPUInt32 key);
+	static GPUInt64 encryptId64(GPUInt64 id, GPUInt64 key);
+	static GPUInt64 decryptId64(GPUInt64 id, GPUInt64 key);
 
 };
 

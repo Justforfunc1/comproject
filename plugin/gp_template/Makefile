@@ -1,21 +1,22 @@
 #makefile 
 SYSTYPE = LINUX2
-INC_DIR = -I. -I../../plugin
+LIB_PATH=-L../../lib/share -L../../lib/static
+INC_DIR = -I. -I../../plugin -I../../include 
 CC      = g++
-OPT     = -D__LINUX -O2 -Wall -Wl,--as-needed -shared -fPIC
+OPT     = -D__LINUX -O2 -Wall
 DEBUG   = -g -std=c++11
-DEFS    = $(INC_DIR) -lpthread
-CFLAGS  = $(DEBUG) $(OPT) $(DEFS)
-OBJS    = GPMutex.cpp
-LIBS    = libgp_template.so
+DEFS    = $(INC_DIR) -lpthread -lboost_regex -l
+CFLAGS  = $(DEBUG) $(OPT) $(LIB_PATH) $(DEFS)
+OBJS    = GPMutex.cpp test.cpp
 
-all:
-	$(CC) $(CFLAGS) -o $(LIBS) $(OBJS)
+all: test
+
+compile:
+
+test:
+	$(CC) $(CFLAGS) $(OBJS) -o test 
 	@printf "\033[32m SUCCESS \033[0m\n"
 
-install:
-	cp -rpf $(LIBS) ../../lib/share/$(LIBS)
-	cp -rpf *.h ../../include/gp_base/
 
 .PHONY: clean
 clean:
