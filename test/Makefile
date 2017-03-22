@@ -35,7 +35,11 @@ json_test:
 	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) json_test.cpp $(STLIB) -o json_test_main
 	@printf "\033[32m JSON_TEST SUCCESS \033[0m\n"
 
-#libevent_test:
+thread_test:
+	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) thread_test.cpp $(STLIB) -o thread_test_main
+	@printf "\033[32m THREAD_TEST SUCCESS \033[0m\n"
+
+#event_test:
 #	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) libevent_test.cpp $(STLIB) -o $(BIN_PATH)/libevent_test_main
 #	@printf "\033[32m JSON_TEST SUCCESS \033[0m\n"
 

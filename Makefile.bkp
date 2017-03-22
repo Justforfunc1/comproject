@@ -6,7 +6,6 @@ PLUGIN_PATH=./plugin
 GPBASE_MOD=gp_base
 GPSQL_MOD=gp_sql
 GPTEMPLATE_MOD=gp_template
-GPXLS_MOD=gp_xls
 GPTCP_MOD=gp_tcp
 
 # 编译函数定义
