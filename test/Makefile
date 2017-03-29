@@ -6,7 +6,7 @@ LIB_PATH=-L../lib/share -L../lib/static
 SHRLIB_PATH = ../lib/share
 STLLIB_PATH = ../lib/static
 
-LIB= -lpthread -lgp_base -ljsoncpp -lboost_filesystem -lboost_system -lboost_regex
+LIB= -lpthread -lgp_base -ljsoncpp -lboost_filesystem -lboost_system -lboost_regex -levent
 SHRLIB = $(SHRLIB_PATH)/libgp_base.so		\
 		 $(SHRLIB_PATH)/libprotobuf.so	
 
@@ -39,9 +39,9 @@ thread_test:
 	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) thread_test.cpp $(STLIB) -o thread_test_main
 	@printf "\033[32m THREAD_TEST SUCCESS \033[0m\n"
 
-#event_test:
-#	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) libevent_test.cpp $(STLIB) -o $(BIN_PATH)/libevent_test_main
-#	@printf "\033[32m JSON_TEST SUCCESS \033[0m\n"
+event_test:
+	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH) event_test.cpp $(STLIB) -o event_test_main
+	@printf "\033[32m EVENT_TEST SUCCESS \033[0m\n"
 
 run:
 	cd $(BIN)

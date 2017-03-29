@@ -69,6 +69,10 @@ void do_accept(evutil_socket_t fd, short event, void *arg) {
         puts("accpet error");
         exit(1);
     }
+    else
+    {
+    	printf("client [%s] login success\n",inet_ntoa(client_addr.sin_addr));
+    }
 
     //类型转换
     struct event_base *base_ev = (struct event_base *) arg;
@@ -104,7 +108,7 @@ int main() {
     memset(&server_addr,0,sizeof(server_addr)); //数据初始化--清零
     server_addr.sin_family = AF_INET; //设置为IP通信
     server_addr.sin_addr.s_addr = INADDR_ANY;//服务器IP地址--允许连接到所有本地地址上
-    server_addr.sin_port = htons(8001); //服务器端口号
+    server_addr.sin_port = htons(8000); //服务器端口号
 
     //创建服务端套接字
     server_socketfd = socket(PF_INET,SOCK_STREAM,0);
