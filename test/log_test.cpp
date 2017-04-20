@@ -1,7 +1,7 @@
 /**********************************************************
  * \file log_test.cpp
  * \brief
- * \note	注意事项： 
+ * \note	注意事项：
  *
  *\version 
  ** \author Allen.L
@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
-#include "gp_base/GPBase.h"
+#include "Base/Common/GPBase.h"
 
 #define INIT_FILE "../conf/log_test.ini"
 

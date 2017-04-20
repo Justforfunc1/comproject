@@ -6,8 +6,8 @@ LIB_PATH=-L../lib/share -L../lib/static
 SHRLIB_PATH = ../lib/share
 STLLIB_PATH = ../lib/static
 
-LIB= -lpthread -lgp_base -ljsoncpp -lboost_filesystem -lboost_system -lboost_regex -levent
-SHRLIB = $(SHRLIB_PATH)/libgp_base.so		\
+LIB= -lpthread -lgpbase -ljsoncpp -lboost_filesystem -lboost_system -lboost_regex -levent
+SHRLIB = $(SHRLIB_PATH)/libgpbase.so		\
 		 $(SHRLIB_PATH)/libprotobuf.so	
 
 STLIB = ../lib/static/libevent.a	\
