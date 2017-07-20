@@ -11,32 +11,33 @@
 
 #include <stdio.h>
 #include <signal.h>
+#include <unistd.h>
+#include <cstring>
+#include <iostream>
+#include <thread>
 
-class MainRun{
+#include "server_state.h"
 
+class MainRun {
  public:
-	bool running_;
-	bool isRun_;
-	bool isExit_;
+  bool running_;
+  bool is_run_;
+  bool is_exit_;
+  int master_;
 
-	int master_;
-
-	MainRun();
-
-	void config();
-
-	int run();
-	void destory();
-	void stopRun();
-
+  MainRun();
+  void Config();
+  void Run();
+  void Destory();
+  void StopRun();
 
  private:
-	string server_id_;
-	ServerState *state_;
+  std::string server_id_;
+  ServerState *state_;
 
-	static void userSignals(int signo);
-	static void dealSignals(int signo);
-	void setSignals();
+  void SetSignals();
+  static void UserSignals(int signo);
+  static void DealSignals(int signo);
 
 };
 

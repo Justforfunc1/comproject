@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 17:19:16
+ ** \last modified 2017-07-19 18:58:06
 **********************************************************/
 #ifndef _CONFIG_H
 #define _CONFIG_H
@@ -23,6 +23,11 @@
 #include "base/define.h"
 
 namespace base {
+
+#define BASE_CONFIG base::Config::GetConfig()
+#define CONFIG_LOAD(filename) BASE_CONFIG.Load(filename)
+#define CONFIG_GETSTR(section, key, d) BASE_CONFIG.GetString(section, key, d)
+#define CONFIG_GETINT(section, key, d) BASE_CONFIG.GetInt(section, key, d)
 
 struct StrHash {
 	size_t operator()(const std::string& str) const {

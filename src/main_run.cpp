@@ -7,13 +7,13 @@
  ** \author Allen.L
 **********************************************************/
 
-#include "MainRun.h"
+#include "main_run.h"
 
 
-constexpr MainRun m;
+MainRun m;
 
 MainRun::MainRun() :
-	running_(false), isRun_(false), isExit_(false), master_(0)	{
+	running_(false), is_run_(false), is_exit_(false), master_(0) {
 
 	/*初始化日志时间、等级，生成当日日志文件
 	*生成项目所需的对象
@@ -21,24 +21,24 @@ MainRun::MainRun() :
 	*/
 }
 
-viod MainRun::config() {
+void MainRun::Config() {
 
 	/*
 	 *初识化项目所需模块相关配置
 	 *
 	 *
 	  */
-	setSignals();
-	isRun_ = ture;
+	SetSignals();
+	is_run_ = true;
 
 }
 
-void MainRun::userSignals() {
-	boost::thread thr(boost::bind(MainRun::dealSignals, signo)));
+void MainRun::UserSignals(int signo) {
+	std::thread thr(std::bind(MainRun::DealSignals, signo));
 	thr.join();
 }
 
-void MainRun::dealSignals(int signo) {
+void MainRun::DealSignals(int signo) {
 	switch (signo) {
 		case 35:  {
 			break;
@@ -52,33 +52,33 @@ void MainRun::dealSignals(int signo) {
 	}
 }
 
-void MainRun::setSignals() {
-	if (signal(SIGRTMIN + 1, MainRun::userSignals) == SIG_ERR) {
+void MainRun::SetSignals() {
+	if (signal(SIGRTMIN + 1, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 1);
 	}
-	if (signal(SIGRTMIN + 2, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 2, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 2);
 	}
-	if (signal(SIGRTMIN + 3, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 3, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 3);
 	}
-	if (signal(SIGRTMIN + 4, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 4, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 4);
 	}
-	if (signal(SIGRTMIN + 5, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 5, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 5);
 	}
-	if (signal(SIGRTMIN + 6, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 6, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 6);
 	}
-	if (signal(SIGRTMIN + 7, MainRun::userSignals) == SIG_ERR) {
+	if (signal(SIGRTMIN + 7, MainRun::UserSignals) == SIG_ERR) {
 		printf("------>signal set error[signalNo=%d]!", SIGRTMIN + 7);
 	}
 }
 
-void MainRun::run() {
-	isRun_ = ture;
-	while (isRun_) {
+void MainRun::Run() {
+	is_run_ = true;
+	while (is_run_) {
 		/*
 		 *xxxxxx
 		 */
@@ -86,11 +86,11 @@ void MainRun::run() {
 	}
 
 	//*****
-	isRun_ = false;
+	is_run_ = false;
 }
 
 
-void MainRun::destory() {
+void MainRun::Destory() {
 
 	/*
 	 *
@@ -102,8 +102,8 @@ void MainRun::destory() {
 
 }
 
-void MainRun::stopRun() {
-	isRun_ = false;
+void MainRun::StopRun() {
+	is_run_ = false;
 }
 
 void help() {
@@ -126,19 +126,19 @@ int main(int args, char **argv)	{
 			//*****
 		}
 	} else {
-			cout << "xxx Server[" << pid << "] running...." << endl;
+		std::cout << "xxx Server[" << pid << "] running...." << std::endl;
 	}
 
-	m.config();
+	m.Config();
 
-	while (!m.m_isExit) {
-		if (m.m_isRun)
-			m.run();
+	while (!m.is_exit_) {
+		if (m.is_run_)
+			m.Run();
 		else
 			sleep(1);
 	}
 
-	m.destory();
+	m.Destory();
 	return 0;
 }
 

@@ -12,7 +12,7 @@
 ServerState::ServerState() {
 }
 
-static long getSeconds() {
+static long GetSeconds() {
 	time_t rawtime;
 	struct tm* curtime;
 	time(&rawtime);
@@ -21,10 +21,10 @@ static long getSeconds() {
 }
 
 
-void ServerState::run() {
+void ServerState::Run() {
 }
 
 
-void ServerState::config(const char* start_time, const char* end_time) {
+void ServerState::Config(const char* start_time, const char* end_time) {
 }
 

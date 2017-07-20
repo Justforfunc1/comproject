@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 18:40:44
+ ** \last modified 2017-07-19 21:02:02
 **********************************************************/
 
 #include "string_util.h"
@@ -64,9 +64,63 @@ bool StringUtil::StrReplaceAll(std::string &str, const std::string &replace, con
 	return true;
 }
 
-template <typename T>
-bool StringUtil::SplitString(const std::string &str, const std::string &delim, T &result) {
-	return true;
+bool StringUtil::SplitString(const std::string &str, const std::string &delim, std::vector<std::string> &result) {
+	result.clear();
+	if (str.empty()) {
+		result.push_back("");
+		return true;
+	}
+	int count = 0;
+	std::string::size_type curindex = 0;
+	std::string::size_type preindex = 0;
+	while (1) {
+		if (++count > static_cast<int32>(str.size())) {
+			break;
+		}
+		curindex = str.find_first_of(delim, preindex);
+		if (curindex == std::string::npos) {
+			if (preindex != std::string::npos) {
+				result.push_back(str.substr(preindex));
+			}
+			return true;
+		}
+		if (preindex != curindex) {
+			result.push_back(str.substr(preindex, curindex - preindex));
+		}
+		else {
+			result.push_back("");
+		}
+		preindex = curindex + delim.size();
+	}
+	return false;
+}
+
+bool StringUtil::SplitString(const std::string &str, const std::string &delim, std::list<std::string> &result) {
+	result.clear();
+	if (str.empty()) {
+		result.push_back("");
+		return true;
+	}
+	int count = 0;
+	std::string::size_type curindex = 0;
+	std::string::size_type preindex = 0;
+	while (1) {
+		if (++count > static_cast<int32>(str.size())) {
+			break;
+		}
+		curindex = str.find_first_of(delim, preindex);
+		if (curindex == std::string::npos) {
+			if (preindex != std::string::npos) {
+				result.push_back(str.substr(preindex));
+			}
+			return true;
+		}
+		if (preindex != curindex) {
+			result.push_back(str.substr(preindex, curindex - preindex));
+		}
+		preindex = curindex + delim.size();
+	}
+	return false;
 }
 
 std::string StringUtil::MergeString(const std::vector<std::string> &vector, const std::string &delim) {

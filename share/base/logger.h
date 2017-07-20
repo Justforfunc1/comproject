@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 17:38:08
+ ** \last modified 2017-07-19 18:59:41
 **********************************************************/
 #ifndef _LOGGER_H
 #define _LOGGER_H
@@ -42,8 +42,8 @@ typedef struct {
 	int32 status;
 } CacheFragment;
 
-#define BASE_GPLOGGER_MANAGER base::LoggerManager::Instance()
-#define BASE_GPLOGGER_INIT(fname, level, rotate) BASE_GPLOGGER_MANAGER.Init(fname, level, rotate)
+#define BASE_LOGGER_MANAGER base::LoggerManager::Instance()
+#define BASE_LOGGER_INIT(fname, level, rotate) BASE_LOGGER_MANAGER.Init(fname, level, rotate)
 
 
 // 类名 : LoggerManager

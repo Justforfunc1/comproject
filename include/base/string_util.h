@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 18:36:37
+ ** \last modified 2017-07-19 20:49:08
 **********************************************************/
 #ifndef _STRING_UTIL_H
 #define _STRING_UTIL_H
@@ -31,8 +31,8 @@ class StringUtil {
   static bool StrReplaceAll(std::string &str, const std::string &replace, const std::string &dest);
   // 通过分割符来分割字符串，并将分割好的数据存在对应的数据中
   // 当输入字符串为空时，结果会返回一个空值的字符串
-  template <typename T>
-  static bool SplitString(const std::string &str, const std::string &delim, T &result);
+  static bool SplitString(const std::string &str, const std::string &delim, std::vector<std::string> &result);
+  static bool SplitString(const std::string &str, const std::string &delim, std::list<std::string> &result);
   // 合并字符串, 使用分隔符分隔
   static std::string MergeString(const std::vector<std::string> &vector, const std::string &delim);
   // 删除左边(右边)的空白符，制表符，换行符
