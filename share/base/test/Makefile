@@ -50,7 +50,7 @@ run:
 	@printf "\033[32m RUN EXIT!!! \033[0m\n"
 
 clean:
-	rm -f *.o log_test_mian json_test_main thread_testi_main event_test_main
+	rm -f *.o log_test_mian json_test_main thread_test_main event_test_main
 
 tags:
 	rm -rf tags
