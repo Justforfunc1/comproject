@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-05
- ** \last modified 2017-07-17 16:23:14
+ ** \last modified 2017-08-07 16:57:37
 **********************************************************/
 #ifndef _SINGLETON_H
 #define _SINGLETON_H
@@ -87,7 +87,7 @@ std::unique_ptr<T>	Singleton<T, false>::static_ptr_instance_;
 template<class T>
 std::once_flag	Singleton<T, false>::static_inited_once_flag_;
 
-}; //base
+} //base
 
 #endif
 

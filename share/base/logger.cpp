@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 17:34:29
+ ** \last modified 2017-08-07 16:58:28
 **********************************************************/
 
 #include "base/logger.h"
@@ -456,4 +456,4 @@ int32 Logger::my_vsnprintf(char  *str, size_t size, const char  *format, va_list
 	return out_cnt;
 }
 
-}; //base
+} //base

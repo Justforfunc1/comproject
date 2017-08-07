@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 20:49:08
+ ** \last modified 2017-08-07 16:57:26
 **********************************************************/
 #ifndef _STRING_UTIL_H
 #define _STRING_UTIL_H
@@ -52,7 +52,8 @@ class StringUtil {
   static void FormatTimeStr(char *str);
 
 };
-}; //utils
-}; //base
+
+} //utils
+} //base
 #endif
 

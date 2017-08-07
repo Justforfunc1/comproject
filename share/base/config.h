@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 18:58:06
+ ** \last modified 2017-08-07 16:53:54
 **********************************************************/
 #ifndef _CONFIG_H
 #define _CONFIG_H
@@ -90,7 +90,7 @@ class Config {
   STR_MAP config_map_;
 };
 
-}; //base
+} //base
 
 #endif
 

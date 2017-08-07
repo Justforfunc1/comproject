@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 18:59:41
+ ** \last modified 2017-08-07 16:53:15
 **********************************************************/
 #ifndef _LOGGER_H
 #define _LOGGER_H
@@ -160,7 +160,7 @@ class Logging {
 
 };
 
-}; //base
+} //base
 
 #endif
 

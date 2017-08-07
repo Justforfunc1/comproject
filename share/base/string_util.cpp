@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-07-19 21:02:02
+ ** \last modified 2017-08-07 16:57:58
 **********************************************************/
 
 #include "string_util.h"
@@ -262,5 +262,5 @@ void StringUtil::FormatTimeStr(char *str) {
 	}
 }
 
-}; // utils
-}; // base
+} // utils
+} // base
