@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-08-07 16:57:58
+ ** \last modified 2017-09-04 16:54:02
 **********************************************************/
 
 #include "string_util.h"
@@ -67,8 +67,7 @@ bool StringUtil::StrReplaceAll(std::string &str, const std::string &replace, con
 bool StringUtil::SplitString(const std::string &str, const std::string &delim, std::vector<std::string> &result) {
 	result.clear();
 	if (str.empty()) {
-		result.push_back("");
-		return true;
+		return false;
 	}
 	int count = 0;
 	std::string::size_type curindex = 0;
@@ -79,7 +78,7 @@ bool StringUtil::SplitString(const std::string &str, const std::string &delim, s
 		}
 		curindex = str.find_first_of(delim, preindex);
 		if (curindex == std::string::npos) {
-			if (preindex != std::string::npos) {
+			if (preindex != str.size()) {
 				result.push_back(str.substr(preindex));
 			}
 			return true;
@@ -98,8 +97,7 @@ bool StringUtil::SplitString(const std::string &str, const std::string &delim, s
 bool StringUtil::SplitString(const std::string &str, const std::string &delim, std::list<std::string> &result) {
 	result.clear();
 	if (str.empty()) {
-		result.push_back("");
-		return true;
+		return false;
 	}
 	int count = 0;
 	std::string::size_type curindex = 0;
@@ -110,7 +108,7 @@ bool StringUtil::SplitString(const std::string &str, const std::string &delim, s
 		}
 		curindex = str.find_first_of(delim, preindex);
 		if (curindex == std::string::npos) {
-			if (preindex != std::string::npos) {
+			if (preindex != str.size()) {
 				result.push_back(str.substr(preindex));
 			}
 			return true;

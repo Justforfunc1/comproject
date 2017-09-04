@@ -7,10 +7,12 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-18
- ** \last modified 2017-07-19 15:47:08
+ ** \last modified 2017-08-29 19:30:05
 **********************************************************/
 #ifndef _BASE_H
 #define _BASE_H
+
+#include <errno.h>
 
 namespace base {
 

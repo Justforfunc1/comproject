@@ -6,8 +6,8 @@ LIB_PATH=-L../lib/share -L../lib/static
 SHRLIB_PATH = ../lib/share
 STLLIB_PATH = ../lib/static
 
-LIB= -lpthread -llpsys -ljsoncpp 
-SHRLIB = $(SHRLIB_PATH)/liblpsys.so		\
+LIB= -lpthread -llpbase -ljsoncpp 
+SHRLIB = $(SHRLIB_PATH)/liblpbase.so		\
 		 $(SHRLIB_PATH)/libprotobuf.so	
 
 STLIB = ../lib/static/libevent.a	\
