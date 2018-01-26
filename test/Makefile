@@ -16,6 +16,7 @@ SHRLIB = $(SHRLIB_PATH)/liblpbase.so		\
 STLIB = ../lib/static/libevent.a	\
 		../lib/static/libjsoncpp.a	\
 		../lib/static/libmysqlclient.a	\
+		../lib/static/liblua.a	\
 		../lib/static/libevent.a
 
 CC= gcc
@@ -55,6 +56,11 @@ sql_test:
 	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH)  sql_test.cpp $(STLIB) -o sql_test_main
 	@printf "\033[32m SQL_TEST SUCCESS \033[0m\n"
 
+lua_test:
+	$(CC) $(CPPFLAGS) $(INC_PATH) $(LIB_PATH) $(SHRLIB) $(LIB) -Wl,-rpath=$(SHRLIB_PATH)  lua_test.cpp $(STLIB) -o lua_test_main
+	@printf "\033[32m LUA_TEST SUCCESS \033[0m\n"
+
+
 run:
 	cd $(BIN)
 	./test
@@ -62,7 +68,7 @@ run:
 	@printf "\033[32m RUN EXIT!!! \033[0m\n"
 
 clean:
-	rm -f *.o log_test_mian json_test_main thread_test_main event_test_main cache_test_main sql_test_main
+	rm -f *.o log_test_mian json_test_main thread_test_main event_test_main cache_test_main sql_test_main lua_test_main
 
 tags:
 	rm -rf tags
