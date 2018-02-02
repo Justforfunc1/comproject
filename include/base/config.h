@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-08-07 16:53:54
+ ** \last modified 2010-01-01 09:31:36
 **********************************************************/
 #ifndef _CONFIG_H
 #define _CONFIG_H
@@ -20,7 +20,7 @@
 #define  HASH_NAME    std
 #endif
 
-#include "base/define.h"
+#include "define.h"
 
 namespace base {
 

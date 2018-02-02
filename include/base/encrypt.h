@@ -7,14 +7,14 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-03
- ** \last modified 2017-07-19 15:47:19
+ ** \last modified 2010-01-01 09:32:09
 **********************************************************/
 #ifndef _ENCRYPT_H
 #define _ENCRYPT_H
 
-#include "base/define.h"
-#include "base/md5.h"
-#include "base/rc4.h"
+#include "define.h"
+#include "md5.h"
+#include "rc4.h"
 
 namespace base {
 namespace utils {

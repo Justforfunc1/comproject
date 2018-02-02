@@ -7,12 +7,12 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-08-07 16:57:26
+ ** \last modified 2010-01-01 09:33:54
 **********************************************************/
 #ifndef _STRING_UTIL_H
 #define _STRING_UTIL_H
 
-#include "base/define.h"
+#include "define.h"
 
 namespace base {
 namespace utils {

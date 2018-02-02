@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-18
- ** \last modified 2017-08-29 19:30:05
+ ** \last modified 2010-01-01 09:31:22
 **********************************************************/
 #ifndef _BASE_H
 #define _BASE_H
@@ -39,13 +39,13 @@ inline int GetSystemErrno() {
 
 } //base
 
-#include "base/define.h"
-#include "base/config.h"
-#include "base/logger.h"
-#include "base/encrypt.h"
-#include "base/singleton.h"
-#include "base/string_util.h"
-#include "base/json_util.h"
+#include "define.h"
+#include "config.h"
+#include "logger.h"
+#include "encrypt.h"
+#include "singleton.h"
+#include "string_util.h"
+#include "json_util.h"
 
 #endif
 

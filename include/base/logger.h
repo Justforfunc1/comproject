@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2017-08-07 16:53:15
+ ** \last modified 2010-01-01 09:33:02
 **********************************************************/
 #ifndef _LOGGER_H
 #define _LOGGER_H
@@ -16,8 +16,8 @@
 #include <sys/syscall.h>
 #include <mutex>
 
-#include "base/define.h"
-#include "base/singleton.h"
+#include "define.h"
+#include "singleton.h"
 
 #define MAX_FRAGMENT 102400
 #define FRAGMENT_SIZE 2048
