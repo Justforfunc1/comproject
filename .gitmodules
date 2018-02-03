@@ -1,0 +1,6 @@
+[submodule "share/base"]
+	path = share/base
+	url = https://github.com/lp112124/base.git
+[submodule "share/net"]
+	path = share/net
+	url = https://github.com/lp112124/net.git
