@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2010-01-01 09:33:02
+ ** \last modified 2010-01-01 08:47:31
 **********************************************************/
 #ifndef _LOGGER_H
 #define _LOGGER_H

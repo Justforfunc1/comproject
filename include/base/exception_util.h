@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-06
- ** \last modified 2010-01-01 09:32:32
+ ** \last modified 2010-01-01 08:47:00
 **********************************************************/
 #ifndef _EXCEPTION_UTIL_H
 #define _EXCEPTION_UTIL_H

@@ -7,7 +7,7 @@
  *\version 1.0
  ** \author Allen.L
  ** \date 2017-07-03
- ** \last modified 2010-01-01 09:32:09
+ ** \last modified 2010-01-01 08:46:37
 **********************************************************/
 #ifndef _ENCRYPT_H
 #define _ENCRYPT_H
