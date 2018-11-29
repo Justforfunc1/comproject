@@ -2,9 +2,9 @@
 
 **介绍**
 -	通用的项目框架
--	通用库 https://github.com/lp112124/base.git version 1.0
+-	通用库 https://github.com/Justforfunc1/base.git version 1.0
 -	网络库 TODO
--	数据库 https://github.com/lp112124/db.git version 1.0
+-	数据库 https://github.com/Justforfunc1/db.git version 1.0
 -	脚本库 TODO
 
 **Schedule**
